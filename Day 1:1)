@@ -1,0 +1,29 @@
+# Define the data
+age_intervals <- c("1-5", "5-15", "15-20", "20-50", "50-80", "80-110")
+frequencies <- c(200, 450, 300, 1500, 700, 44)
+
+# Calculate cumulative frequencies
+cumulative_frequencies <- cumsum(frequencies)
+
+# Calculate total frequency and half of total frequency
+total_frequency <- sum(frequencies)
+half_total_frequency <- total_frequency / 2
+
+# Find the median class
+median_class_index <- which(cumulative_frequencies >= half_total_frequency)[1]
+
+# Define the class boundaries
+lower_bounds <- c(1, 5, 15, 20, 50, 80)
+upper_bounds <- c(5, 15, 20, 50, 80, 110)
+
+# Extract the relevant values for the median class
+L <- lower_bounds[median_class_index]
+CF <- ifelse(median_class_index == 1, 0, cumulative_frequencies[median_class_index - 1])
+f <- frequencies[median_class_index]
+h <- upper_bounds[median_class_index] - lower_bounds[median_class_index]
+
+# Calculate the median using the formula
+median <- L + ((half_total_frequency - CF) / f) * h
+
+# Print the result
+cat("The approximate median value is:", median, "\n")
